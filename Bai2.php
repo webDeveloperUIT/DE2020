@@ -40,7 +40,7 @@
 
   $sql = "INSERT INTO XE (SOXE, HANGXE, NAMSX, MAKH) VALUES(?,?,?,?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("ssss", $MAKH, $SOXE, $HANGXE, $NAMSX);
+  $stmt->bind_param("ssss", $SOXE, $HANGXE, $NAMSX, $MAKH);
 
   $SOXE = $_POST["maKhachHang"];
   $HANGXE = $_POST["txtSoXe"];
