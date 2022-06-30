@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+  </head>
+  <body>
+    <h3>Thanh toan</h3>
+    SO Xe
+    <select id="cbSoXe"></select>
+    Ngay Nhan Xe <input type="date" id="txtNgayNhan" /> Thanh Tien
+    <input type="txt" id="txtThanhTien" />
+    <table>
+      <tr>
+        <th>Ten Cong Viec</th>
+        <th>Don Gia</th>
+        <th>Chuc Nang</th>
+      </tr>
+      <tbody id="data"></tbody>
+    </table>
+    <button type="submit" id="btnThanhToan">Thanh toan</button>
+    <script>
+      var txtNgayNhan = document.getElementById("txtNgayNhan");
+      var cbSoXe = document.getElementById("cbSoXe");
+      var txtThanhTien = document.getElementById("txtThanhTien");
+      var tblCongViec = document.getElementById("data");
+      // xy ly javascrip cho cac componet
+      txtNgayNhan.addEventListener("change", function () {
+        // call ajax
+        var ajax = new XMLHttpRequest();
+        var method = "POST";
+        var url = "thanhToan.php";
+        var param = "ngaynhan=" + txtNgayNhan.value;
+        ajax.open(method, url, true);
+        // sending ajax request
+        ajax.send(param);
+        // receiving response from thanhToan.php
+        ajax.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.responseText);
+            var html = "";
+            for (var i = 0; i < data.length; i++) {
+              var SOXE = data[i].SOXE;
+              html += "<option>" + SOHD + "</option>";
+            }
+            console.log(html);
+            document.getElementByName("cbSoXe").innerHTML = html;
+          }
+        };
+      });
+
+      cbSoXe.addEventListener("change", function () {
+        // call ajax
+        var ajax = new XMLHttpRequest();
+        var method = "POST";
+        var url = "ChiTietCongViec.php";
+        var param = "soxe=" + cbSoXe.value;
+        ajax.open(method, url, true);
+        // sending ajax request
+        ajax.send(param);
+        // receiving response from thanhToan.php
+        ajax.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.responseText);
+            var html = "";
+            for (var i = 0; i < data.length; i++) {
+              var MaCV = data[i].MACV;
+              var TenCV = data[i].TENCV;
+              var DonGia = data[i].DONGIA;
+              html += `
+                <tr>
+                  <td>${TenCV}</td>
+                  <td>${DonGia}</td>
+                  <td>${}</td>
+                </tr>
+              `
+            }
+            console.log(html);
+            document.getElementByName("cbSoXe").innerHTML = html;
+          }
+        };
+      });
+    </script>
+  </body>
+</html>
