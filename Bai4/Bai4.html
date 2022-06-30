@@ -24,12 +24,15 @@
       var cbSoXe = document.getElementById("cbSoXe");
       var txtThanhTien = document.getElementById("txtThanhTien");
       var tblCongViec = document.getElementById("data");
-      // xy ly javascrip cho cac componet
+      var deleteButton = document.getElementById("deleteButton");
+      var btnThanhToan = document.getElementById("btnThanhToan");
+
+      // nua chon ngay tu combobox va lay ra ket qua
       txtNgayNhan.addEventListener("change", function () {
         // call ajax
         var ajax = new XMLHttpRequest();
         var method = "POST";
-        var url = "thanhToan.php";
+        var url = "LaySoXe.php";
         var param = "ngaynhan=" + txtNgayNhan.value;
         ajax.open(method, url, true);
         // sending ajax request
@@ -49,12 +52,13 @@
         };
       });
 
+      // lua chon so xe lay ra du lieu cong viec cua xe do
       cbSoXe.addEventListener("change", function () {
         // call ajax
         var ajax = new XMLHttpRequest();
         var method = "POST";
         var url = "ChiTietCongViec.php";
-        var param = "soxe=" + cbSoXe.value;
+        var param = "soxe=" + cbSoXe.value + "&ngaynhan=" + txtNgayNhan.value;
         ajax.open(method, url, true);
         // sending ajax request
         ajax.send(param);
@@ -71,15 +75,47 @@
                 <tr>
                   <td>${TenCV}</td>
                   <td>${DonGia}</td>
-                  <td><button value=${MaCV}>Xoa</button></td>
+                  <td><button value=${MaCV} id="deleteButton">Xoa</button></td>
                 </tr>
               `;
             }
-            console.log(html);
             document.getElementByName("cbSoXe").innerHTML = html;
           }
         };
       });
+      //nhan nut xoa thi xoa du lieu tai dong tren giao dien va trong Database
+      deleteButton.addEventListener("click", function () {
+        var ajax = new XMLHttpRequest();
+        var method = "POST";
+        var url = "XoaCongViec.php";
+        var param =
+          "macongviec=" + deleteButton.value + "&soxe=" + cbSoXe.value;
+        ajax.open(method, url, true);
+        ajax.send(param);
+        ajax.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            deleteButton.parentElement.parentElement.remove();
+          }
+        };
+      });
+
+      btnThanhToan.addEventListener("change", function () {
+        var sumValue = 0;
+        for(var i = 0 ; i < tblCongViec.rows.length; i++ ){
+          sumValue  += parseInt()tblCongViec.rows[i].cells[2].innerHTML;
+        }
+        // call ajax
+        var ajax = new XMLHttpRequest();
+        var method = "POST";
+        var url = "ThanhTien.php";
+        var param = "soxe=" + cbSoXe.value +"&thanhtien=" + sumValue;
+        ajax.open(method, url, true);
+        ajax.send(param);
+                ajax.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            txtThanhTien.value=sumValue;
+          };
+        }});
     </script>
   </body>
 </html>
