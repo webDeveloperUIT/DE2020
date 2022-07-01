@@ -30,9 +30,7 @@
       // nua chon ngay tu combobox va lay ra ket qua
       txtNgayNhan.addEventListener("change", function () {
         // call ajax
-        var ajax = new XMLHttpRequest();
-        var method = "POST";
-        var url = "LaySoXe.php";
+                var url = "LaySoXe.php";
         var param = "ngaynhan=" + txtNgayNhan.value;
         ajax.open(method, url, true);
         // sending ajax request

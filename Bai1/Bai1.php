@@ -5,7 +5,7 @@
   <title></title>
 </head>
 <body>
-  <h3>Them Nhan Vien</h3>
+  <h3>Them thong tin xe khach hang</h3>
   <form action="Bai1.php" method="POST">
      Ma Khach Hang <input type="text" name="txtMaKH">
     Ho Ten  Khach Hang <input type="text" name="txtHoTen">
@@ -16,12 +16,12 @@
 <?php if (isset($_POST["btnThem"]) && $_POST["btnThem"] === "them") {
   $conn = mysqli_connect("localhost", "root", "", "BanHang");
 
-  $sql = "INSERT INTO KHACHHANG (MAKH, HOTEN,SODT, DIENTHOAI) VALUES(?,?,?,?)";
+  $sql = "INSERT INTO KHACHHANG (MAKH, HOTEN,DIACHI, DIENTHOAI) VALUES(?,?,?,?)";
 
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("ssss", $MAKH, $HOTEN, $DIACHI, $DIENTHOAI);
 
-  $MAKH = $_POST["txtMANV"];
+  $MAKH = $_POST["txtMaKH"];
   $HOTEN = $_POST["txtHoTen"];
   $DIACHI = $_POST['txtDiaChi'] 
     $SODT = $_POST["txtSdt"];

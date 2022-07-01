@@ -1,24 +1,24 @@
 <?php
-$conn = mysqli_connect("localhost", "root", "", "BanHang");
-if (isset($_GET["soxe"])) {
-  $stmt = $conn->prepare("SELECT HOTEN FROM KHACHHANG  kh JOIN XE xe on kh.MAKH = xe.MAKH  where SOXE=? ");
 
-  $stmt->bind_param("s", $SOXE);
+$stmt = $conn->prepare(
+  "SELECT HOTEN FROM KHACHHANG  kh JOIN XE xe on kh.MAKH = xe.MAKH  where SOXE=? "
+);
 
-  $MANV = $_GET["soxe"];
+$stmt->bind_param("s", $SOXE);
 
-  $stmt->execute();
+$MANV = $_GET["soxe"];
 
-  $stmt->bind_result($result);
+$stmt->execute();
 
-  $stmt->close();
-  $conn->close();
+$stmt->bind_result($result);
 
-  while ($row = mysqli_fetch_assoc($result)) {
-    $data = $row["HOTEN"];
-  }
+$stmt->close();
+$conn->close();
 
-  echo json_encode($data);
+while ($row = mysqli_fetch_assoc($result)) {
+  $data = $row["HOTEN"];
 }
+
+echo json_encode($data);
 
 ?>

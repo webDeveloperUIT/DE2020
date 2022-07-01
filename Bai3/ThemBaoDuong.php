@@ -1,7 +1,5 @@
 <?php
 
-  $conn = mysqli_connect("localhost", "root", "", "BanHang");
-
   $stmt = $conn->prepare("INSERT INTO BAODUONG (MABD,NGAYNHAN, NGAYTRA,SOKM,NOIDUNG,SOXE,THANHTIEN) VALUES(?,?,?,?,?,?,?)";
 
   $stmt->bind_param("ssssssi", $SOXE);
@@ -15,8 +13,6 @@
   $THANHTIEN = NULL;
 
   $stmt->execute();
-  $stmt->close();
-  $conn->close();
   
 }
 
